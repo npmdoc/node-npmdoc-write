@@ -1,0 +1,203 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/jonschlinkert/write">write (v0.3.3)</a>
+</h1>
+<h4>Write files to disk, creating intermediate directories if they don't exist.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.write">module write</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.write.write">
+            function <span class="apidocSignatureSpan"></span>write
+            <span class="apidocSignatureSpan">(dest, str, options, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.write.stream">
+            function <span class="apidocSignatureSpan">write.</span>stream
+            <span class="apidocSignatureSpan">(dest, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.write.sync">
+            function <span class="apidocSignatureSpan">write.</span>sync
+            <span class="apidocSignatureSpan">(dest, str, options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.write" id="apidoc.module.write">module write</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.write.write" id="apidoc.element.write.write">
+        function <span class="apidocSignatureSpan"></span>write
+        <span class="apidocSignatureSpan">(dest, str, options, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function writeFile(dest, str, options, cb) {
+  if (typeof options === 'function') {
+    cb = options;
+    options = {};
+  }
+
+  var dir = path.dirname(dest);
+  fs.stat(dir, function(err, stats) {
+    if (err &amp;&amp; err.code !== 'ENOENT') {
+      cb(err);
+      return;
+    }
+
+    if (!err) {
+      fs.writeFile(dest, str, options, cb);
+    } else {
+      mkdir(dir, function(err) {
+        if (err) {
+          return cb(err);
+        } else {
+          fs.writeFile(dest, str, options, cb);
+        }
+      });
+    }
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.write.stream" id="apidoc.element.write.stream">
+        function <span class="apidocSignatureSpan">write.</span>stream
+        <span class="apidocSignatureSpan">(dest, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">stream = function (dest, options) {
+  createDirectory(dest, options);
+  return fs.createWriteStream(dest);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* `dest` **{String}**: Destination file path
+* `returns` **{Stream}**: Returns a write stream.
+
+**Example**
+
+```js
+var writeFile = require('write');
+writeFile.<span class="apidocCodeKeywordSpan">stream</span>('foo.txt');
+```
+
+## About
+
+### Related projects
+
+* [delete](https://www.npmjs.com/package/delete): Delete files and folders and any intermediate directories if they exist (sync
+and async). | [homepage](https://github.com/jonschlinkert/delete "Delete files and folders and any intermediate directories
+ if they exist (sync and async).")
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.write.sync" id="apidoc.element.write.sync">
+        function <span class="apidocSignatureSpan">write.</span>sync
+        <span class="apidocSignatureSpan">(dest, str, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">sync = function (dest, str, options) {
+  createDirectory(dest, options);
+  fs.writeFileSync(dest, str, options);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* `dest` **{String}**: Destination file path
+* `str` **{String}**: String to write to disk.
+
+**Example**
+
+```js
+var writeFile = require('write');
+writeFile.<span class="apidocCodeKeywordSpan">sync</span>('foo.txt', 'This is content to write.');
+```
+
+### [.writeFile.stream](index.js#L95)
+
+Uses `fs.createWriteStream`, but also creates any intermediate directories along the way if they don't already exist.
+
+**Params**
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
